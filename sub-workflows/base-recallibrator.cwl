@@ -8,15 +8,15 @@ inputs:
   - id: reference
     type: File
     'sbg:x': 0
-    'sbg:y': 53.3671875
+    'sbg:y': 0
   - id: inputBam_BaseRecalibrator
     type: File
     'sbg:x': 0
-    'sbg:y': 266.6796875
+    'sbg:y': 213.84375
   - id: gatk_jar
     type: File
-    'sbg:x': 273.75
-    'sbg:y': 4.328125
+    'sbg:x': 0
+    'sbg:y': 320.765625
   - id: covariate
     type:
       - 'null'
@@ -36,14 +36,8 @@ inputs:
         inputBinding:
           prefix: '--knownSites'
     'sbg:x': 0
-    'sbg:y': 160.0234375
+    'sbg:y': 106.921875
   - id: outputfile_BaseRecalibrator
-    type: string
-    'sbg:exposed': true
-  - id: output
-    type: string
-    'sbg:exposed': true
-  - id: java_args
     type: string
     'sbg:exposed': true
   - id: covariate_1
@@ -69,25 +63,37 @@ inputs:
   - id: csv
     type: string?
     'sbg:exposed': true
+  - id: java_arg_3
+    type: string
+    'sbg:exposed': true
+  - id: outputfile_printReads
+    type: string?
+    'sbg:exposed': true
 outputs:
   - id: output_pdf
     outputSource:
       - _analyze_covariats/output_pdf
     type: File?
-    'sbg:x': 934.5650024414062
-    'sbg:y': 213.390625
+    'sbg:x': 1047.261474609375
+    'sbg:y': 213.84375
   - id: output_csv
     outputSource:
       - _analyze_covariats/output_csv
     type: File?
-    'sbg:x': 934.5650024414062
-    'sbg:y': 320.046875
-  - id: bam_out
+    'sbg:x': 1047.261474609375
+    'sbg:y': 320.765625
+  - id: output_printReads
     outputSource:
-      - gatk_reassignonemappingqualityfilter/bam_out
+      - _g_a_t_k__print_reads/output_printReads
     type: File
-    'sbg:x': 968.7677001953125
-    'sbg:y': 71.4393081665039
+    'sbg:x': 1047.261474609375
+    'sbg:y': 106.921875
+  - id: flagstats
+    outputSource:
+      - sambamba_flagstat/flagstats
+    type: stdout
+    'sbg:x': 1198.9371337890625
+    'sbg:y': -76.60557556152344
 steps:
   - id: _base_recalibrator
     in:
@@ -113,27 +119,7 @@ steps:
       - id: output_baseRecalibrator
     run: ../CWL-CommandLineTools/GATK/3.6/BaseRecalibrator.cwl
     'sbg:x': 273.75
-    'sbg:y': 294.6796875
-  - id: gatk_reassignonemappingqualityfilter
-    in:
-      - id: Reference
-        source: reference
-      - id: INPUT
-        source: inputBam_BaseRecalibrator
-      - id: output
-        source: output
-      - id: java_args
-        source: java_args
-      - id: gatk_jar
-        source: gatk_jar
-      - id: BQSR
-        source: _base_recalibrator/output_baseRecalibrator
-    out:
-      - id: bam_out
-    run: ../CWL-CommandLineTools/GATK/3.6/PrintReads.cwl
-    label: GATK-PrintReads
-    'sbg:x': 697.0625
-    'sbg:y': 64.65625
+    'sbg:y': 213.84375
   - id: _base_recalibrator_1
     in:
       - id: covariate
@@ -158,7 +144,7 @@ steps:
       - id: output_baseRecalibrator
     run: ../CWL-CommandLineTools/GATK/3.6/BaseRecalibrator.cwl
     'sbg:x': 273.75
-    'sbg:y': 139.0234375
+    'sbg:y': 57.921875
   - id: _analyze_covariats
     in:
       - id: java_arg
@@ -181,5 +167,33 @@ steps:
     run: ../CWL-CommandLineTools/GATK/3.6/AnalyzeCovariats.cwl
     label: GATK-AnalyzeCovariats
     'sbg:x': 697.0625
-    'sbg:y': 213.3515625
+    'sbg:y': 213.84375
+  - id: _g_a_t_k__print_reads
+    in:
+      - id: gatk_jar
+        source: gatk_jar
+      - id: inputBam_printReads
+        source: inputBam_BaseRecalibrator
+      - id: input_baseRecalibrator
+        source: _base_recalibrator/output_baseRecalibrator
+      - id: java_arg
+        source: java_arg_3
+      - id: outputfile_printReads
+        source: outputfile_printReads
+      - id: reference
+        source: reference
+    out:
+      - id: output_printReads
+    run: ../CWL-CommandLineTools/GATK/3.6/GATK-PrintReads.cwl
+    'sbg:x': 697.0625
+    'sbg:y': 64.921875
+  - id: sambamba_flagstat
+    in:
+      - id: bam_in
+        source: _g_a_t_k__print_reads/output_printReads
+    out:
+      - id: flagstats
+    run: ../../CWL-CommandLineTools/Sambamba/0.6.6/sambamba-flagstat.cwl
+    'sbg:x': 1042.3338623046875
+    'sbg:y': -75.29862213134766
 requirements: []
