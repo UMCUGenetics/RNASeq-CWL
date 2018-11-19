@@ -1,0 +1,43 @@
+{
+    "CREATE_INDEX": "true",
+    "N_CIGAR": "ALLOW_N_CIGAR_READS",
+    "OUTPUT": "split.bam",
+    "RMQF": 255,
+    "RMQT": 60,
+    "ReadGroupID": "agfdfg",
+    "ReadGroupLibrary": "afgsdg",
+    "ReadGroupPlatform": "agfdgadfg",
+    "ReadGroupPlatformUnit": "fdagfdg",
+    "ReadGroupSampleName": "gffgdsfg",
+    "Reference": {
+        "class": "File",
+        "path": "/hpc/cog_bioinf/GENOMES/Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fasta"
+    },
+    "createIndex": "true",
+    "fastq1": {
+        "class": "File",
+        "path": "../TEST/STAR/TEST_R1.fastq"
+    },
+    "fastq2": {
+        "class": "File",
+        "path": "../TEST/STAR/TEST_R1.fastq"
+    },
+    "gatk_jar": {
+        "class": "File",
+        "path": "/hpc/cog_bioinf/common_scripts/GenomeAnalysisTK-3.6/GenomeAnalysisTK.jar"
+    },
+    "genomeDir": {
+        "class": "Directory",
+        "path": "/hpc/cog_bioinf/GENOMES/STAR/Homo_sapiens.GRCh37"
+    },
+    "jar": {
+        "class": "File",
+        "path": "../picard.jar"
+    },
+    "java_arg": "-Xmx4g",
+    "java_args": "-Xmx4g",
+    "metricsFile": "metrics.txt",
+    "outSamType": "BAM SortedByCoordinate",
+    "outputFileName_markDups": "Test.rmdup.bam",
+    "rf": "ReassignOneMappingQuality" 
+}
