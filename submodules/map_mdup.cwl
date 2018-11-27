@@ -118,6 +118,9 @@ outputs:
     realign_intervals:
         type: File
         outputSource: realignTargets/output_intervals
+    realigned_bam:
+       type: File
+       outputSource: indelRealigner/output_bam
 steps:
     star_alignReads:
         run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
@@ -174,6 +177,14 @@ steps:
              reference_sequence: reference_sequence
              input: splitNCigar/bam_out
         out: [output_intervals]
+    indelRealigner:
+        run:  ../CWL-CommandLineTools/GATK/3.4-46/IndelRealigner.cwl
+        in: 
+             gatk_jar: gatk_jar
+             reference_sequence: reference_sequence
+             input: splitNCigar/bam_out
+             targetIntervals: realignTargets/output_intervals 
+        out: [output_bam]
               
             
     
