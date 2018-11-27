@@ -115,6 +115,9 @@ outputs:
     splitNCigar_bam:
         type: File
         outputSource: splitNCigar/bam_out
+    realign_intervals:
+        type: File
+        outputSource: realignTargets/output_intervals
 steps:
     star_alignReads:
         run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
@@ -164,6 +167,13 @@ steps:
              RMQF: sncigar_RMQF
              RMQT: sncigar_RMQT
         out: [bam_out]
+    realignTargets:
+        run:  ../CWL-CommandLineTools/GATK/3.4-46/RealignerTargetCreator.cwl
+        in: 
+             gatk_jar: gatk_jar
+             reference_sequence: reference_sequence
+             input: splitNCigar/bam_out
+        out: [output_intervals]
               
             
     
