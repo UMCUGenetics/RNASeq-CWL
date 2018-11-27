@@ -1,12 +1,12 @@
 star_fastq1:
   class: File
-  path: ../../../TEST_DATA/chr6_paired/R1.chr6.fq
+  path: /Users/tschafers/Test_data/STAR/fastq/chr6_paired/R1.chr6.fq
 star_fastq2:
   class: File
-  path: ../../../TEST_DATA/chr6_paired/R2.chr6.fq
+  path: /Users/tschafers/Test_data/STAR/fastq/chr6_paired/R2.chr6.fq
 star_genomeDir:
   class: Directory
-  path: /hpc/cog_bioinf/GENOMES/STAR/Homo_sapiens.GRCh37
+  path: /Users/tschafers/Test_data/STAR/starIndex
 star_outFileNamePrefix: Test
 picard_rg_ReadGroupID: myID
 picard_rg_ReadGroupLibrary: RNAseq  
@@ -15,4 +15,4 @@ picard_rg_ReadGroupPlatformUnit: PLU
 picard_rg_ReadGroupSampleName: Sample1 
 picard_jar:
   class: File
-  path: /home/cog/tschafers/picard.jar
+  path: /Users/tschafers/.local/jar/picard.jar

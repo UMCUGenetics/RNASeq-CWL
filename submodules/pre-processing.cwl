@@ -13,7 +13,7 @@ inputs:
           position: 1
           prefix: '--genomeDir'
     star_fastq1:
-        type: File?
+        type: File
         inputBinding:
           position: 2
           prefix: '--readFilesIn'
@@ -28,15 +28,10 @@ inputs:
           position: 5
           prefix: '--outFileNamePrefix' 
     picard_jar:
-        type: File?
+        type: File
         inputBinding:
           position: 3
           prefix: '-jar'
-    picard_rg_input:
-        type: File
-        inputBinding:
-          position: 7
-          prefix: INPUT=
     picard_rg_ReadGroupID:
         type: string
         inputBinding:
@@ -69,9 +64,15 @@ outputs:
     read_group_bam:
         type: File
         outputSource: picard_read_groups/out_bam
+    rg_flagstat:
+        type: File
+        outputSource: sambamba_rg_flagstat/output_flagstat 
     mdup_bam:
         type: File
         outputSource: picard_mdup/markDups_output
+    mdub_flagstat:
+        type: File
+        outputSource: sambamba_mdub_flagstat/output_flagstat 
 steps:
     star_alignReads:
         run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
@@ -92,6 +93,11 @@ steps:
              ReadGroupPlatformUnit: picard_rg_ReadGroupPlatformUnit
              ReadGroupSampleName: picard_rg_ReadGroupSampleName
         out: [out_bam]
+    sambamba_rg_flagstat:
+        run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
+        in:
+            input: picard_read_groups/out_bam
+        out: [output_flagstat]
 
     picard_mdup:
         run:  ../CWL-CommandLineTools/Picard/2.18.7/MarkDuplicates.cwl
@@ -99,4 +105,9 @@ steps:
              picard_jar: picard_jar
              input: picard_read_groups/out_bam
         out: [markDups_output]
-              
+    
+    sambamba_mdub_flagstat:
+        run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
+        in:
+            input: picard_mdup/markDups_output
+        out: [output_flagstat]
