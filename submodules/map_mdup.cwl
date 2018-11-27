@@ -115,12 +115,18 @@ outputs:
     splitNCigar_bam:
         type: File
         outputSource: splitNCigar/bam_out
+    ncigar_flagstat:
+        type: File
+        outputSource: sambamba_ncigar_flagstat/output_flagstat 
     realign_intervals:
         type: File
         outputSource: realignTargets/output_intervals
     realigned_bam:
        type: File
        outputSource: indelRealigner/output_bam
+    realign_flagstat:
+        type: File
+        outputSource: sambamba_realign_flagstat/output_flagstat 
 steps:
     star_alignReads:
         run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
@@ -170,6 +176,14 @@ steps:
              RMQF: sncigar_RMQF
              RMQT: sncigar_RMQT
         out: [bam_out]
+
+    sambamba_ncigar_flagstat:
+        run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
+        in:
+             input: splitNCigar/bam_out
+        out: [output_flagstat]
+
+
     realignTargets:
         run:  ../CWL-CommandLineTools/GATK/3.4-46/RealignerTargetCreator.cwl
         in: 
@@ -185,6 +199,10 @@ steps:
              input: splitNCigar/bam_out
              targetIntervals: realignTargets/output_intervals 
         out: [output_bam]
-              
-            
     
+    sambamba_realign_flagstat:
+        run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
+        in:
+             input: indelRealigner/output_bam
+        out: [output_flagstat]        
+
