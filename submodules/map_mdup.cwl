@@ -57,6 +57,45 @@ inputs:
         inputBinding:
           position: 12
           prefix: RGSM=
+    gatk_jar:
+        type: File
+        inputBinding:
+          position: 2
+          prefix: '-jar'
+    reference_sequence:
+        type: File
+        secondaryFiles:
+            - .fai
+            - ^.dict
+        inputBinding:
+          prefix: --reference_sequence
+          position: 5
+    sncigar_input:
+        type: File
+        secondaryFiles: ^.bai
+        inputBinding:
+          position: 5
+          prefix: '-I'
+    sncigar_n_cigar:
+        type: string
+        inputBinding:
+          position: 11
+          prefix: '-U'
+    sncigar_rf:
+        type: string?
+        inputBinding:
+          position: 8
+          prefix: '-rf'
+    sncigar_RMQF:
+        type: int?
+        inputBinding:
+          position: 9
+          prefix: '-RMQF'
+    sncigar_RMQT:
+        type: int?
+        inputBinding:
+          position: 10
+          prefix: '-RMQT'
 outputs:
     star_aligned:
         type: File
@@ -73,6 +112,9 @@ outputs:
     mdub_flagstat:
         type: File
         outputSource: sambamba_mdub_flagstat/output_flagstat 
+    splitNCigar_bam:
+        type: File
+        outputSource: splitNCigar/bam_out
 steps:
     star_alignReads:
         run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
@@ -96,11 +138,11 @@ steps:
     sambamba_rg_flagstat:
         run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
         in:
-            input: picard_read_groups/out_bam
+             input: picard_read_groups/out_bam
         out: [output_flagstat]
 
     picard_mdup:
-        run:  ../CWL-CommandLineTools/Picard/2.18.7/MarkDuplicates.cwl
+        run: ../CWL-CommandLineTools/Picard/2.18.7/MarkDuplicates.cwl
         in:
              picard_jar: picard_jar
              input: picard_read_groups/out_bam
@@ -109,5 +151,19 @@ steps:
     sambamba_mdub_flagstat:
         run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
         in:
-            input: picard_mdup/markDups_output
+             input: picard_mdup/markDups_output
         out: [output_flagstat]
+    splitNCigar:
+        run:  ../CWL-CommandLineTools/GATK/3.4-46/SplitNCigarReads.cwl
+        in: 
+             gatk_jar: gatk_jar
+             reference_sequence: reference_sequence
+             input: picard_mdup/markDups_output 
+             n_cigar: sncigar_n_cigar
+             rf: sncigar_rf
+             RMQF: sncigar_RMQF
+             RMQT: sncigar_RMQT
+        out: [bam_out]
+              
+            
+    
