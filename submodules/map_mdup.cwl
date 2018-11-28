@@ -70,12 +70,6 @@ inputs:
         inputBinding:
           prefix: --reference_sequence
           position: 5
-    sncigar_input:
-        type: File
-        secondaryFiles: ^.bai
-        inputBinding:
-          position: 5
-          prefix: '-I'
     sncigar_n_cigar:
         type: string
         inputBinding:
@@ -136,6 +130,7 @@ steps:
              genomeDir: star_genomeDir
              outFileNamePrefix: star_outFileNamePrefix
         out: [output]
+
     picard_read_groups:
         run:  ../CWL-CommandLineTools/Picard/2.18.7/AddOrReplaceReadGroups.cwl
         in:
@@ -147,6 +142,7 @@ steps:
              ReadGroupPlatformUnit: picard_rg_ReadGroupPlatformUnit
              ReadGroupSampleName: picard_rg_ReadGroupSampleName
         out: [out_bam]
+
     sambamba_rg_flagstat:
         run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
         in:
@@ -165,6 +161,7 @@ steps:
         in:
              input: picard_mdup/markDups_output
         out: [output_flagstat]
+
     splitNCigar:
         run:  ../CWL-CommandLineTools/GATK/3.4-46/SplitNCigarReads.cwl
         in: 
@@ -191,6 +188,7 @@ steps:
              reference_sequence: reference_sequence
              input: splitNCigar/bam_out
         out: [output_intervals]
+        
     indelRealigner:
         run:  ../CWL-CommandLineTools/GATK/3.4-46/IndelRealigner.cwl
         in: 

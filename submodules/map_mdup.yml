@@ -16,3 +16,9 @@ picard_rg_ReadGroupSampleName: Sample1
 picard_jar:
   class: File
   path: /Users/tschafers/.local/jar/picard.jar
+reference_sequence: /path/to/reference.fa
+gatk_jar: /path/to/gatk.jar
+sncigar_n_cigar: ALLOW_N_CIGAR_READS
+sncigar_rf: ReassignOneMappingQuality
+sncigar_RMQF: 255
+sncigar_RMQT: 60
