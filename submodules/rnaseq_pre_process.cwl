@@ -7,31 +7,16 @@ requirements:
     - class: InlineJavascriptRequirement
 
 inputs:
-    star_genomeDir:
-        type: Directory
-        inputBinding:
-          position: 1
-          prefix: '--genomeDir'
-    star_fastq1:
-        type: File
-        inputBinding:
-          position: 2
-          prefix: '--readFilesIn'
-    star_fastq2:
-        type: File
-        inputBinding:
-          position: 3
-          prefix: ''   
-    star_outFileNamePrefix:
-        type: string
-        inputBinding:
-          position: 5
-          prefix: '--outFileNamePrefix' 
     picard_jar:
         type: File
         inputBinding:
           position: 3
           prefix: '-jar'
+    picard_input_bam:
+        type: File
+        inputBinding:
+          position: 7
+          prefix: INPUT=
     picard_rg_ReadGroupID:
         type: string
         inputBinding:
@@ -91,9 +76,6 @@ inputs:
           position: 10
           prefix: '-RMQT'
 outputs:
-    star_aligned:
-        type: File
-        outputSource: star_alignReads/output
     read_group_bam:
         type: File
         outputSource: picard_read_groups/out_bam
@@ -122,20 +104,11 @@ outputs:
         type: File
         outputSource: sambamba_realign_flagstat/output_flagstat 
 steps:
-    star_alignReads:
-        run: ../CWL-CommandLineTools/STAR/2.6.0a/alignReads.cwl
-        in:
-             fastq1: star_fastq1  
-             fastq2: star_fastq2
-             genomeDir: star_genomeDir
-             outFileNamePrefix: star_outFileNamePrefix
-        out: [output]
-
     picard_read_groups:
         run:  ../CWL-CommandLineTools/Picard/2.18.7/AddOrReplaceReadGroups.cwl
         in:
              picard_jar: picard_jar 
-             input: star_alignReads/output 
+             input: picard_input_bam
              ReadGroupID: picard_rg_ReadGroupID
              ReadGroupLibrary: picard_rg_ReadGroupLibrary
              ReadGroupPlatform: picard_rg_ReadGroupPlatform  
