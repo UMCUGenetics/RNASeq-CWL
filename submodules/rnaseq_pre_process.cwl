@@ -114,6 +114,9 @@ outputs:
     base_recall_table_post:
         type: File
         outputSource: baseRecalibrator_bqsr/recall_table
+    print_reads_bam:
+        type: File
+        outputSource: printReads/output_printReads
 
 steps:
     picard_read_groups:
@@ -204,3 +207,11 @@ steps:
              input: indelRealigner/output_bam
              BQSR: baseRecalibrator/recall_table
         out: [recall_table]
+    printReads:
+        run:  ../CWL-CommandLineTools/GATK/3.4-46/PrintReads.cwl
+        in: 
+             gatk_jar: gatk_jar
+             reference_sequence: reference_sequence
+             input: indelRealigner/output_bam
+             recall_table: baseRecalibrator_bqsr/recall_table
+        out: [output_printReads]
