@@ -80,6 +80,12 @@ inputs:
         inputBinding:
           position: 10
           prefix: '-RMQT'
+    known_sites:
+        type: File[]?   
+        inputBinding:
+            separate: false
+            prefix: '--knownSites'
+            position: 11  
 outputs:
     read_group_bam:
         type: File
@@ -116,7 +122,7 @@ outputs:
         outputSource: baseRecalibrator_bqsr/recall_table
     print_reads_bam:
         type: File
-        outputSource: printReads/output_printReads
+        outputSource: printReads/output_printReads 
 
 steps:
     picard_read_groups:
@@ -198,6 +204,7 @@ steps:
              gatk_jar: gatk_jar
              reference_sequence: reference_sequence
              input: indelRealigner/output_bam
+             known: known_sites
         out: [recall_table]
     baseRecalibrator_bqsr:
         run:  ../CWL-CommandLineTools/GATK/3.4-46/BaseRecalibrator.cwl
@@ -206,6 +213,7 @@ steps:
              reference_sequence: reference_sequence
              input: indelRealigner/output_bam
              BQSR: baseRecalibrator/recall_table
+             known: known_sites
         out: [recall_table]
     printReads:
         run:  ../CWL-CommandLineTools/GATK/3.4-46/PrintReads.cwl

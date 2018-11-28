@@ -17,3 +17,6 @@ sncigar_n_cigar: ALLOW_N_CIGAR_READS
 sncigar_rf: ReassignOneMappingQuality
 sncigar_RMQF: 255
 sncigar_RMQT: 60
+known_sites: [
+        {class: File, path: /hpc/cog_bioinf/common_dbs/GATK_bundle/1000G_phase1.indels.b37.vcf}
+]
