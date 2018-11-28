@@ -1,13 +1,3 @@
-star_fastq1:
-  class: File
-  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/R1.chr6.fq
-star_fastq2:
-  class: File
-  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/R2.chr6.fq
-star_genomeDir:
-  class: Directory
-  path: /hpc/cog_bioinf/GENOMES/STAR/Homo_sapiens.GRCh37
-star_outFileNamePrefix: Test
 picard_rg_ReadGroupID: myID
 picard_rg_ReadGroupLibrary: RNAseq  
 picard_rg_ReadGroupPlatform: Illumina 
