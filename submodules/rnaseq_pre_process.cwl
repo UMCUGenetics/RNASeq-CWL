@@ -123,6 +123,9 @@ outputs:
     print_reads_bam:
         type: File
         outputSource: printReads/output_printReads 
+    printReads_flagstat:
+        type: File
+        outputSource: sambamba_printReads_flagstat/output_flagstat  
 
 steps:
     picard_read_groups:
@@ -223,3 +226,8 @@ steps:
              input: indelRealigner/output_bam
              recall_table: baseRecalibrator_bqsr/recall_table
         out: [output_printReads]
+    sambamba_printReads_flagstat:
+        run: ../CWL-CommandLineTools/Sambamba/0.6.7/flagstat.cwl
+        in:
+             input: printReads/output_printReads 
+        out: [output_flagstat]         
