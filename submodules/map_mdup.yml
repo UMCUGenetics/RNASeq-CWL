@@ -6,7 +6,7 @@ star_fastq2:
   path: /Users/tschafers/Test_data/STAR/fastq/chr6_paired/R2.chr6.fq
 star_genomeDir:
   class: Directory
-  path: /Users/tschafers/Test_data/STAR/starIndex
+  path: /hpc/cog_bioinf/GENOMES/STAR/Homo_sapiens.GRCh37
 star_outFileNamePrefix: Test
 picard_rg_ReadGroupID: myID
 picard_rg_ReadGroupLibrary: RNAseq  
@@ -15,9 +15,13 @@ picard_rg_ReadGroupPlatformUnit: PLU
 picard_rg_ReadGroupSampleName: Sample1 
 picard_jar:
   class: File
-  path: /Users/tschafers/.local/jar/picard.jar
-reference_sequence: /path/to/reference.fa
-gatk_jar: /path/to/gatk.jar
+  path: /hpc/cog_bioinf/common_scripts/picard-tools-1.62/picard-1.62.jar
+reference_sequence: 
+  class: File
+  path: /hpc/cog_bioinf/GENOMES/Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fasta
+gatk_jar: 
+  class: File
+  path: /hpc/cog_bioinf/common_scripts/GenomeAnalysisTK-3.4-0/GenomeAnalysisTK.jar
 sncigar_n_cigar: ALLOW_N_CIGAR_READS
 sncigar_rf: ReassignOneMappingQuality
 sncigar_RMQF: 255
