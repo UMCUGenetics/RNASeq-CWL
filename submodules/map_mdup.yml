@@ -1,9 +1,9 @@
 star_fastq1:
   class: File
-  path: /Users/tschafers/Test_data/STAR/fastq/chr6_paired/R1.chr6.fq
+  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/R1.chr6.fq
 star_fastq2:
   class: File
-  path: /Users/tschafers/Test_data/STAR/fastq/chr6_paired/R2.chr6.fq
+  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/R2.chr6.fq
 star_genomeDir:
   class: Directory
   path: /Users/tschafers/Test_data/STAR/starIndex
