@@ -16,10 +16,10 @@ picard_rg_ReadGroupSampleName: Sample1
 picard_jar:
   class: File
   path: /hpc/cog_bioinf/common_scripts/picard-tools-1.62/picard-1.62.jar
-reference_sequence: 
+reference_sequence:
   class: File
   path: /hpc/cog_bioinf/GENOMES/Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fasta
-gatk_jar: 
+gatk_jar:
   class: File
   path: /hpc/cog_bioinf/common_scripts/GenomeAnalysisTK-3.4-0/GenomeAnalysisTK.jar
 sncigar_n_cigar: ALLOW_N_CIGAR_READS
