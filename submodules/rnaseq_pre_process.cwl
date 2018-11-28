@@ -50,8 +50,13 @@ inputs:
     reference_sequence:
         type: File
         secondaryFiles:
+            - .amb
+            - .ann
+            - .bwt
+            - .pac
+            - .sa
             - .fai
-            - ^.dict
+            - ^.dict 
         inputBinding:
           prefix: --reference_sequence
           position: 5
@@ -103,6 +108,10 @@ outputs:
     realign_flagstat:
         type: File
         outputSource: sambamba_realign_flagstat/output_flagstat 
+    base_recall_table:
+        type: File
+        outputSource: baseRecalibrator/recall_table
+
 steps:
     picard_read_groups:
         run:  ../CWL-CommandLineTools/Picard/2.18.7/AddOrReplaceReadGroups.cwl
@@ -177,3 +186,10 @@ steps:
              input: indelRealigner/output_bam
         out: [output_flagstat]        
 
+    baseRecalibrator:
+        run:  ../CWL-CommandLineTools/GATK/3.4-46/BaseRecalibrator.cwl
+        in: 
+             gatk_jar: gatk_jar
+             reference_sequence: reference_sequence
+             input: indelRealigner/output_bam
+        out: [recall_table]
