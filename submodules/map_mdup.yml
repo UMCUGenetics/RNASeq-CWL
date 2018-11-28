@@ -6,7 +6,7 @@ star_fastq2:
   path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/R2.chr6.fq
 star_genomeDir:
   class: Directory
-  path: /Users/tschafers/Test_data/STAR/starIndex
+  path: /hpc/cog_bioinf/GENOMES/STAR/Homo_sapiens.GRCh37
 star_outFileNamePrefix: Test
 picard_rg_ReadGroupID: myID
 picard_rg_ReadGroupLibrary: RNAseq  
