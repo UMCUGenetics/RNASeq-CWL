@@ -46,6 +46,16 @@ inputs:
         inputBinding:
           prefix: --out
           position: 5
+    clusterSize:
+        type: int?
+        inputBinding:
+          prefix: --clusterSize
+          position: 5
+    clusterWindowSize:
+        type: int?
+        inputBinding:  
+          prefix: --clusterWindowSize
+          position: 5
     htc_dont_use_softclipped_bases:
         type: boolean?
         inputBinding:
