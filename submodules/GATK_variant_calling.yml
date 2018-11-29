@@ -1,0 +1,22 @@
+gatk_jar:  
+  class: File
+  path: /hpc/cog_bioinf/common_scripts/GenomeAnalysisTK-3.4-0/GenomeAnalysisTK.jar
+genome:
+  class: File
+  path: /hpc/cog_bioinf/GENOMES/Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fasta
+
+htc_input_bam:
+  class: File
+  path: /path/to/input/bam
+htc_stand_call_conf: 20.0
+htc_stand_emit_conf: 20.0
+htc_dont_use_softclipped_bases: true
+htc_out: Test_raw_variants.vcf
+variant_filtration_out: [Test_variants_filtered.vcf ]
+variant_filtration_names: [
+    [ LowQualityDepth, MappingQuality, StrandBias, aplotypeScoreHigh, MQRankSumLow, ReadPosRankSumLow ]
+]
+variant_filtration_exp: [
+    [ QD < 2.0, MQ < 40.0, FS > 60.0, HaplotypeScore > 13.0, MQRankSum < -12.5, ReadPosRankSum < -8.0  ]
+]
+
