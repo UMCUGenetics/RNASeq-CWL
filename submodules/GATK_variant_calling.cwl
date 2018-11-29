@@ -54,11 +54,15 @@ inputs:
     variant_filtration_names:
         type:
            type: array
-           items: string
+           items:
+             type: array
+             items: string
     variant_filtration_exp:
         type:
            type: array
-           items: string
+           items:
+             type: array
+             items: string
     variant_filtration_out: string
 
 outputs:
@@ -66,7 +70,7 @@ outputs:
         type: File
         outputSource: gatk_haplotype_caller/output_vcf
     variant_filtration_vcf:
-        type: File
+        type: File[]
         outputSource: gatk_variant_filtration/output_vcf
 steps:
     gatk_haplotype_caller:
@@ -92,4 +96,6 @@ steps:
             out: variant_filtration_out
             filterName: variant_filtration_names
             filterExpression: variant_filtration_exp
+        scatter: [filterName, filterExpression]
+        scatterMethod: dotproduct
         out: [output_vcf]
