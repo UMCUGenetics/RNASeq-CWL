@@ -110,7 +110,7 @@ steps:
             stand_call_conf: htc_stand_call_conf
             stand_emit_conf: htc_stand_emit_conf
             dont_use_softclipped_bases: htc_dont_use_softclipped_bases
-            out: htc_out
+            output: htc_out
         out: [output_vcf]
    
     gatk_select_variants:
