@@ -108,7 +108,7 @@ steps:
             reference_sequence: genome
             input: htc_input_bam
             dont_use_softclipped_bases: htc_dont_use_softclipped_bases
-            output: htc_out
+            out: htc_out
         out: [output_vcf]
    
     gatk_select_variants:
