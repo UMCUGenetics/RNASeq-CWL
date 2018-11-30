@@ -107,8 +107,6 @@ steps:
             gatk_jar: gatk_jar
             reference_sequence: genome
             input: htc_input_bam
-            stand_call_conf: htc_stand_call_conf
-            stand_emit_conf: htc_stand_emit_conf
             dont_use_softclipped_bases: htc_dont_use_softclipped_bases
             output: htc_out
         out: [output_vcf]
