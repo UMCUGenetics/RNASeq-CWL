@@ -1,52 +1,20 @@
 class: Workflow
 cwlVersion: v1.0
-label: map_mdup
+label: RNAseq pre-processing workflow. 
 
 requirements:
     - class: StepInputExpressionRequirement
     - class: InlineJavascriptRequirement
 
 inputs:
-    picard_jar:
-        type: File
-        inputBinding:
-          position: 3
-          prefix: '-jar'
-    picard_input_bam:
-        type: File
-        inputBinding:
-          position: 7
-          prefix: INPUT=
-    picard_rg_ReadGroupID:
-        type: string
-        inputBinding:
-          position: 8
-          prefix: RGID=
-    picard_rg_ReadGroupLibrary:
-        type: string
-        inputBinding:
-          position: 9
-          prefix: RGLB=
-    picard_rg_ReadGroupPlatform:
-        type: string
-        inputBinding:
-          position: 10
-          prefix: RGPL=
-    picard_rg_ReadGroupPlatformUnit:
-        type: string
-        inputBinding:
-          position: 11
-          prefix: RGPU=
-    picard_rg_ReadGroupSampleName:
-        type: string
-        inputBinding:
-          position: 12
-          prefix: RGSM=
-    gatk_jar:
-        type: File
-        inputBinding:
-          position: 2
-          prefix: '-jar'
+    picard_jar: File
+    picard_input_bam: File
+    picard_rg_ReadGroupID: string
+    picard_rg_ReadGroupLibrary: string
+    picard_rg_ReadGroupPlatform: string
+    picard_rg_ReadGroupPlatformUnit: string
+    picard_rg_ReadGroupSampleName: string
+    gatk_jar: File
     reference_sequence:
         type: File
         secondaryFiles:
@@ -57,35 +25,11 @@ inputs:
             - .sa
             - .fai
             - ^.dict 
-        inputBinding:
-          prefix: --reference_sequence
-          position: 5
-    sncigar_n_cigar:
-        type: string
-        inputBinding:
-          position: 11
-          prefix: '-U'
-    sncigar_rf:
-        type: string?
-        inputBinding:
-          position: 8
-          prefix: '-rf'
-    sncigar_RMQF:
-        type: int?
-        inputBinding:
-          position: 9
-          prefix: '-RMQF'
-    sncigar_RMQT:
-        type: int?
-        inputBinding:
-          position: 10
-          prefix: '-RMQT'
-    known_sites:
-        type: File[]?   
-        inputBinding:
-            separate: false
-            prefix: '--knownSites'
-            position: 11  
+    sncigar_n_cigar: string
+    sncigar_rf: string?
+    sncigar_RMQF: int?
+    sncigar_RMQT: int?
+    known_sites: File[]?
 outputs:
     read_group_bam:
         type: File
