@@ -27,3 +27,16 @@ combine_variants_out: Test.filtered_variants.vcf
 assume_identical_samples: true
 clusterSize: 3
 clusterWindowSize: 10
+snpeff_jar:
+  class: File
+  path: /hpc/cog_bioinf/common_scripts/snpEff_v4.1h/snpEff.jar
+snpeff_config:
+  class: File
+  path: /hpc/cog_bioinf/common_scripts/snpEff_v4.1h/snpEff.config
+snpeff_database: GRCh37.74
+
+snpeff_hgvs: true
+snpeff_lof: true
+snpeff_no-downstream: true
+snpeff_no-upstream: true
+snpeff_no-intergenic: true
