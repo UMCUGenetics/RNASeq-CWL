@@ -12,12 +12,18 @@ htc_stand_call_conf: 20.0
 htc_stand_emit_conf: 20.0
 htc_dont_use_softclipped_bases: true
 htc_out: Test_raw_variants.vcf
-variant_filtration_out: [Test_variants_filtered.vcf ]
+select_variants_types: [ [ SNP, NO_VARIATION ], [ INDEL ] ]
+select_variants_out: [ snp.vcf, indel.vcf ]
+variant_filtration_out: [snp_filtered.vcf, indel_filtered.vcf]
 variant_filtration_names: [
-    [ LowQualityDepth, MappingQuality, StrandBias, aplotypeScoreHigh, MQRankSumLow, ReadPosRankSumLow ]
+    [ SNP_LowQualityDepth, SNP_MappingQuality, SNP_StrandBias, SNP_HaplotypeScoreHigh, SNP_MQRankSumLow, SNP_ReadPosRankSumLow ],
+    [ INDEL_LowQualityDepth, INDEL_StrandBias, INDEL_ReadPosRankSumLow ]
 ]
 variant_filtration_exp: [
-    [ QD < 2.0, MQ < 40.0, FS > 60.0, HaplotypeScore > 13.0, MQRankSum < -12.5, ReadPosRankSum < -8.0  ]
+    [ QD < 2.0, MQ < 40.0, FS > 60.0, HaplotypeScore > 13.0, MQRankSum < -12.5, ReadPosRankSum < -8.0  ],
+    [ QD < 2.0, FS > 200.0, ReadPosRankSum < -20.0  ]
 ]
+combine_variants_out: Test.filtered_variants.vcf
+assume_identical_samples: true
 clusterSize: 3
 clusterWindowSize: 10
