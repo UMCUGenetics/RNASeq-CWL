@@ -7,11 +7,8 @@ requirements:
     - class: StepInputExpressionRequirement
     - class: InlineJavascriptRequirement
 inputs:
-    gatk_jar:
+    gatk_jar: 
         type: File
-        inputBinding:
-          position: 2
-          prefix: '-jar'
     genome:
         type: File
         secondaryFiles:
@@ -22,45 +19,15 @@ inputs:
             - .sa
             - .fai
             - ^.dict 
-        inputBinding:
-          prefix: --reference_sequence
-          position: 5
     htc_input_bam:
         type: File[]
         secondaryFiles: ^.bai
-        inputBinding:
-          prefix: --input_file  
-          position: 5 
-    htc_stand_call_conf:
-        type: int?
-        inputBinding:
-          prefix: --stand_call_conf
-          position: 5
-    htc_stand_emit_conf:
-        type: int?
-        inputBinding:
-          prefix: --stand_emit_conf
-          position: 5
-    htc_out:
-        type: string
-        inputBinding:
-          prefix: --out
-          position: 5
-    clusterSize:
-        type: int?
-        inputBinding:
-          prefix: --clusterSize
-          position: 5
-    clusterWindowSize:
-        type: int?
-        inputBinding:  
-          prefix: --clusterWindowSize
-          position: 5
-    htc_dont_use_softclipped_bases:
-        type: boolean?
-        inputBinding:
-          prefix: --dontUseSoftClippedBases
-          position: 5
+    htc_stand_call_conf: int?
+    htc_stand_emit_conf: int?
+    htc_out: string
+    clusterSize: int?
+    clusterWindowSize: int?
+    htc_dont_use_softclipped_bases: boolean?
     select_variants_types:
         type:
            type: array
@@ -68,7 +35,6 @@ inputs:
              type: array
              items: string
     select_variants_out: string[]
-
     variant_filtration_names:
         type:
            type: array
@@ -84,9 +50,16 @@ inputs:
     variant_filtration_out: string[]
     combine_variants_out: string
     assume_identical_samples: boolean
+    snpeff_jar: File            
+    snpeff_config: File
+    snpeff_database: string
+    snpeff_hgvs:  boolean
+    snpeff_lof: boolean
+    snpeff_no-downstream: boolean
+    snpeff_no-upstream: boolean
+    snpeff_no-intergenic: boolean
 
 outputs:
-
     haplotype_caller_vcf:
         type: File
         outputSource: gatk_haplotype_caller/output_vcf
@@ -99,6 +72,9 @@ outputs:
     combine_variants_vcf:
         type: File
         outputSource: gatk_combine_variants/output_vcf
+    snpeff_annotated_vcf:
+        type: File
+        outputSource: snpeff_annotate_variants/output_snpeff
 
 steps:
     gatk_haplotype_caller:
@@ -144,3 +120,16 @@ steps:
             out: combine_variants_out
             assumeIdenticalSamples: assume_identical_samples
         out: [output_vcf]
+    snpeff_annotate_variants:
+        run:  ../CWL-CommandLineTools/SnpEf/4.1h/SnpEff.cwl
+        in:
+            snpeff_jar: snpeff_jar
+            config: snpeff_config
+            database: snpeff_database
+            vcf: gatk_combine_variants/output_vcf
+            hgvs: snpeff_hgvs
+            lof: snpeff_lof
+            no-downstream: snpeff_no-downstream
+            no-upstream: snpeff_no-upstream
+            no-intergenic: snpeff_no-intergenic
+        out: [output_snpeff]
