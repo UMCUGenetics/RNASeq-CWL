@@ -7,7 +7,7 @@ genome:
 
 htc_input_bam:
   class: File
-  path: /path/to/input/bam
+  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/TestAligned_rg.ncigar_split.IndelRealigner.bam
 htc_stand_call_conf: 20.0
 htc_stand_emit_conf: 20.0
 htc_dont_use_softclipped_bases: true
@@ -34,7 +34,6 @@ snpeff_config:
   class: File
   path: /hpc/cog_bioinf/common_scripts/snpEff_v4.1h/snpEff.config
 snpeff_database: GRCh37.74
-
 snpeff_hgvs: true
 snpeff_lof: true
 snpeff_no-downstream: true
