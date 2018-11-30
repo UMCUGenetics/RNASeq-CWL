@@ -12,4 +12,5 @@
 
 source activate rnaseq
 
-$RABIX rnaseq_pre_process.cwl rnaseq_pre_process.yml
+####$RABIX rnaseq_pre_process.cwl rnaseq_pre_process.yml
+$RABIX GATK_variant_calling.cwl GATK_variant_calling.yml
