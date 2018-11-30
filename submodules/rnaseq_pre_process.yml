@@ -1,4 +1,6 @@
-picard_input_bam: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/TestAligned.sortedByCoord.out.bam 
+picard_input_bam: 
+  class:  File
+  path: /hpc/cog_bioinf/ridder/users/tschafers/CWL_TESTING/TEST_DATA/chr6_paired/TestAligned.sortedByCoord.out.bam 
 picard_rg_ReadGroupID: myID
 picard_rg_ReadGroupLibrary: RNAseq  
 picard_rg_ReadGroupPlatform: Illumina 
